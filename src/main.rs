@@ -66,17 +66,9 @@ fn generate_matrix(length: usize, offset: usize, colon: usize) -> Vec<Vec<Option
         .map(|x| x.checked_sub(offset).map(|x| x + 1))
         .enumerate()
         .fold(
-            // init Vec<Vec<Option<usize>>>
-            (0..colon).fold(
-                Vec::<Vec::<Option<usize>>>::with_capacity(colon),
-                |mut acc, _| {
-                    acc.push(Vec::<Option<usize>>::new());
-                    acc
-                }
-            ),
-            // function
-            |mut acc, (i, x)| {
-                acc[i % colon as usize].push(x);
+            vec![Vec::<Option<usize>>::new(); colon],
+            |mut acc, (counter, day)| {
+                acc[counter % colon as usize].push(day);
                 acc
             }
         )
@@ -88,7 +80,6 @@ fn print_month(date: &NaiveDate) {
              month_to_string(date.month0()),
              date.year()
             );
-
 
     let result = generate_matrix(
         get_days_from_month(date).unwrap(),
@@ -103,18 +94,17 @@ fn print_month(date: &NaiveDate) {
                 "".to_string(),
                 |acc, &s| {
                     format!("{} {}", acc,
-                        match s {
-                            Some(x) => {
+                        s.map_or(
+                            pad(" ".to_string(), 2),
+                            |x| {
+                                let default = pad(x.to_string(), 2);
                                 if current_date.day() as usize == x && &current_date == date {
-                                    pad(x.to_string(), 2).black().on_bright_white().to_string()
+                                    default.black().on_bright_white().to_string()
                                 } else {
-                                    pad(x.to_string(), 2)
+                                    default
                                 }
-                            },
-                            None => {
-                                pad(" ".to_string(), 2)
                             }
-                        }
+                        )
                     )
                 }
             );
