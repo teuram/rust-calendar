@@ -2,7 +2,7 @@
 ## Usage
 
 ```shell
-$ cal
+$ calendar
      January 2024
 Mo   1  8 15 22 29
 Tu   2  9 16 23 30
