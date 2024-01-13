@@ -115,7 +115,7 @@ fn print_month(date: &NaiveDate) {
 }
 
 fn main() {
-    std::env::set_var("RUST_BACKTRACE", "1");
+    // std::env::set_var("RUST_BACKTRACE", "1");
 
     let current_date = Local::now().date_naive();
     print_month(&current_date);
