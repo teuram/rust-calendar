@@ -76,7 +76,7 @@ fn generate_matrix(length: usize, offset: usize, colon: usize) -> Vec<Vec<Option
 
 fn print_month(date: &NaiveDate) {
 
-    println!("     {} {}",
+    println!("    {} {}",
              month_to_string(date.month0()),
              date.year()
             );
@@ -108,7 +108,7 @@ fn print_month(date: &NaiveDate) {
                     )
                 }
             );
-        println!("{} {}", day, line);
+        println!("{}{}", day, line);
     }
     println!();
 
@@ -120,6 +120,9 @@ fn main() {
     let current_date = Local::now().date_naive();
     print_month(&current_date);
 
+
+    let current_date = current_date.checked_add_months(Months::new(1)).unwrap();
+    print_month(&current_date);
 
     let current_date = current_date.checked_add_months(Months::new(1)).unwrap();
     print_month(&current_date);
