@@ -118,6 +118,7 @@ fn main() {
     // std::env::set_var("RUST_BACKTRACE", "1");
 
     let current_date = Local::now().date_naive();
+    let current_date = current_date.checked_sub_months(Months::new(1)).unwrap();
     print_month(&current_date);
 
 
